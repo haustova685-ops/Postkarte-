@@ -1,0 +1,255 @@
+<meta name='viewport' content='width=device-width, initial-scale=1'/><!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>С Новым 2027 годом! 🐐🔥</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', system-ui, sans-serif; }
+  body {
+    min-height:100vh;
+    background: radial-gradient(circle at 20% 20%, #2b0a3d, #0d0221 60%, #000);
+    overflow:hidden;
+    color:#fff;
+    display:flex; align-items:center; justify-content:center;
+  }
+
+  /* ===== ЗВЁЗДЫ ===== */
+  .stars { position:fixed; inset:0; pointer-events:none; }
+  .star {
+    position:absolute; width:2px; height:2px; background:#fff;
+    border-radius:50%; animation: twinkle 3s infinite ease-in-out;
+  }
+  @keyframes twinkle { 0%,100%{opacity:.2;} 50%{opacity:1; box-shadow:0 0 6px #fff;} }
+
+  /* ===== СНЕЖИНКИ ===== */
+  .snow {
+    position:fixed; top:-10px; color:#fff; font-size:1em;
+    animation: fall linear infinite; pointer-events:none; opacity:.8;
+  }
+  @keyframes fall {
+    to { transform: translateY(105vh) rotate(360deg); }
+  }
+
+  /* ===== ЭКРАН ВВОДА ===== */
+  .screen {
+    position:fixed; inset:0; display:flex; flex-direction:column;
+    align-items:center; justify-content:center; text-align:center;
+    padding:20px; z-index:20; transition: opacity .8s, transform .8s;
+    background: radial-gradient(circle at 50% 40%, #3a0b52, #0d0221 70%);
+  }
+  .screen.hidden { opacity:0; transform:scale(1.2); pointer-events:none; }
+
+  .screen h1 {
+    font-size: clamp(1.6rem, 5vw, 2.8rem);
+    background: linear-gradient(90deg, #ff9a3c, #ffd93d, #ff6b35, #ffd93d);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    background-size:300% auto; animation: shine 4s linear infinite;
+    margin-bottom:10px; text-shadow: 0 0 30px rgba(255,150,50,.4);
+  }
+  @keyframes shine { to { background-position:300% center; } }
+
+  .screen p { color:#c9b8e0; margin-bottom:24px; font-size:1rem; }
+
+  .name-input {
+    padding:14px 22px; border-radius:50px; border:2px solid #ff9a3c;
+    background: rgba(255,255,255,.08); color:#fff; font-size:1.1rem;
+    outline:none; width: min(320px, 85vw); text-align:center;
+    transition:.3s;
+  }
+  .name-input:focus { border-color:#ffd93d; box-shadow:0 0 20px rgba(255,217,61,.5); }
+  .name-input::placeholder { color:#8a7aa5; }
+
+  .btn-go {
+    margin-top:18px; padding:14px 38px; border:none; border-radius:50px;
+    font-size:1.1rem; font-weight:700; cursor:pointer; color:#2b0a3d;
+    background: linear-gradient(135deg, #ffd93d, #ff9a3c, #ff6b35);
+    background-size:200% auto; transition:.3s; box-shadow:0 6px 25px rgba(255,140,50,.5);
+  }
+  .btn-go:hover { background-position:right center; transform:translateY(-3px) scale(1.05); }
+  .btn-go:disabled { opacity:.4; cursor:not-allowed; transform:none; }
+
+  .goat-emoji { font-size: clamp(3rem, 10vw, 5rem); animation: bounce 1.6s infinite; display:inline-block; }
+  @keyframes bounce { 0%,100%{transform:translateY(0) rotate(-4deg);} 50%{transform:translateY(-14px) rotate(4deg);} }
+
+  /* ===== ОТКРЫТКА ===== */
+  .card {
+    position:relative; z-index:10; text-align:center; padding:40px 30px;
+    max-width:640px; width:92vw;
+    background: rgba(30,10,50,.55);
+    border:1px solid rgba(255,180,80,.35);
+    border-radius:28px;
+    backdrop-filter: blur(14px);
+    box-shadow: 0 0 60px rgba(255,140,50,.25), inset 0 0 40px rgba(255,150,50,.05);
+    animation: cardIn 1.2s cubic-bezier(.2,.8,.2,1) both;
+  }
+  @keyframes cardIn { from { opacity:0; transform: translateY(40px) scale(.95);} to {opacity:1; transform:none;} }
+
+  .card .greet {
+    font-size: clamp(1.4rem, 5vw, 2.4rem); font-weight:800;
+    background: linear-gradient(90deg, #ffd93d, #ff9a3c, #ff6b35, #ffd93d);
+    background-size:300% auto; -webkit-background-clip:text; background-clip:text;
+    color:transparent; animation: shine 5s linear infinite; line-height:1.2;
+  }
+  .card .sub { color:#e6d6ff; margin-top:8px; font-size:1rem; }
+  .card .year {
+    font-size: clamp(3rem, 12vw, 5.5rem); font-weight:900; margin:10px 0;
+    text-shadow: 0 0 30px rgba(255,150,50,.7), 0 0 60px rgba(255,100,30,.4);
+    animation: pulse 2s infinite ease-in-out;
+  }
+  @keyframes pulse { 0%,100%{transform:scale(1);} 50%{transform:scale(1.05);} }
+
+  /* Огонь под цифрой */
+  .flame {
+    width:120px; height:40px; margin:-15px auto 15px;
+    background: radial-gradient(ellipse at center, #ffd93d, #ff6b35 60%, transparent 80%);
+    border-radius:50%; filter: blur(8px); animation: flicker 1.2s infinite alternate;
+  }
+  @keyframes flicker { from{transform:scaleX(1); opacity:.9;} to{transform:scaleX(1.2); opacity:.6;} }
+
+  .goat-show { font-size: clamp(3rem, 9vw, 4.5rem); animation: bounce 2s infinite; display:inline-block; margin:6px 0; }
+
+  .wish {
+    margin-top:14px; color:#d8c8f0; line-height:1.6; font-size:1rem;
+    border-top:1px dashed rgba(255,180,80,.3); padding-top:16px;
+  }
+  .wish b { color:#ffd93d; }
+
+  /* Кнопка снега */
+  .btn-snow {
+    margin-top:20px; padding:12px 28px; border-radius:50px; cursor:pointer;
+    border:2px solid #ff9a3c; background:transparent; color:#ffd93d;
+    font-weight:700; font-size:1rem; transition:.3s;
+  }
+  .btn-snow:hover { background:rgba(255,150,50,.15); box-shadow:0 0 20px rgba(255,150,50,.5); }
+
+  .confetti {
+    position:fixed; top:-20px; font-size:1.2rem; pointer-events:none; z-index:30;
+    animation: confFall linear forwards;
+  }
+  @keyframes confFall {
+    to { transform: translateY(105vh) rotate(720deg); opacity:0; }
+  }
+
+  /* Подарочная ленточка огонька по углам */
+  .spark { position:absolute; width:8px; height:8px; border-radius:50%;
+    background:#ffd93d; box-shadow:0 0 12px #ff9a3c; animation: floatSpark 4s infinite ease-in-out; }
+  @keyframes floatSpark { 0%,100%{transform:translate(0,0); opacity:.4;} 50%{transform:translate(10px,-10px); opacity:1;} }
+</style>
+</head>
+<body>
+
+<!-- Звёзды -->
+<div class="stars" id="stars"></div>
+
+<!-- ЭКРАН ВВОДА -->
+<div class="screen" id="intro">
+  <div class="goat-emoji">🐐🔥</div>
+  <h1>С Новым годом!</h1>
+  <p>Год Огненной Козы уже на пороге. Как вас зовут?</p>
+  <input class="name-input" id="nameInput" type="text" placeholder="Введите имя…" maxlength="20" autocomplete="off">
+  <button class="btn-go" id="startBtn" disabled>Открыть открытку ✨</button>
+</div>
+
+<!-- ОТКРЫТКА -->
+<div class="card" id="card" style="display:none;">
+  <span class="spark" style="top:20px; left:30px;"></span>
+  <span class="spark" style="top:40px; right:40px; animation-delay:1s;"></span>
+  <span class="spark" style="bottom:30px; left:50px; animation-delay:2s;"></span>
+  <span class="spark" style="bottom:50px; right:30px; animation-delay:.5s;"></span>
+
+  <div class="greet" id="greeting">С Новым годом, друг!</div>
+  <div class="sub">Пусть сбудется всё заветное ✨</div>
+
+  <div class="year">2027</div>
+  <div class="flame"></div>
+
+  <div class="goat-show">🐐</div>
+
+  <div class="wish">
+    Желаю, чтобы <b>Огненная Коза</b> принесла тепло в дом,<br>
+    ярких эмоций, вдохновения и исполнения желаний.<br>
+    Пусть год будет <b>щедрым</b> и <b>уютным</b>! 🔥🎁
+  </div>
+
+  <button class="btn-snow" id="snowBtn">🎉 Устроить снегопад!</button>
+</div>
+
+<script>
+/* ---------- ЗВЁЗДЫ ---------- */
+const starsBox = document.getElementById('stars');
+for (let i = 0; i < 80; i++) {
+  const s = document.createElement('div');
+  s.className = 'star';
+  s.style.left = Math.random() * 100 + 'vw';
+  s.style.top = Math.random() * 100 + 'vh';
+  s.style.animationDelay = Math.random() * 3 + 's';
+  s.style.opacity = Math.random() * .5 + .2;
+  starsBox.appendChild(s);
+}
+
+/* ---------- СНЕЖИНКИ ---------- */
+function makeSnowflake() {
+  const flake = document.createElement('div');
+  flake.className = 'snow';
+  flake.textContent = ['❄','❅','❆','*'][Math.floor(Math.random()*4)];
+  flake.style.left = Math.random() * 100 + 'vw';
+  flake.style.fontSize = (Math.random() * 16 + 8) + 'px';
+  flake.style.animationDuration = (Math.random() * 6 + 5) + 's';
+  flake.style.animationDelay = Math.random() * 5 + 's';
+  document.body.appendChild(flake);
+  setTimeout(() => flake.remove(), 12000);
+}
+setInterval(makeSnowflake, 350);
+for (let i = 0; i < 20; i++) setTimeout(makeSnowflake, i * 200);
+
+/* ---------- ЛОГИКА ЭКРАНА ВВОДА ---------- */
+const nameInput = document.getElementById('nameInput');
+const startBtn  = document.getElementById('startBtn');
+const intro     = document.getElementById('intro');
+const card      = document.getElementById('card');
+const greeting  = document.getElementById('greeting');
+
+nameInput.addEventListener('input', () => {
+  startBtn.disabled = nameInput.value.trim().length < 2;
+});
+nameInput.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !startBtn.disabled) startBtn.click();
+});
+
+startBtn.addEventListener('click', () => {
+  const name = nameInput.value.trim();
+  greeting.textContent = `С Новым годом, ${name}! 🎉`;
+  intro.classList.add('hidden');
+  card.style.display = 'block';
+
+  // взрыв конфетти
+  burstConfetti(40);
+  // приветственный снегопад
+  for (let i = 0; i < 30; i++) setTimeout(makeSnowflake, i * 60);
+});
+
+/* ---------- КОНФЕТТИ ---------- */
+function burstConfetti(count) {
+  const emojis = ['🎉','✨','🎁','🔥','❄️','🌟','🐐','💫','🎊'];
+  for (let i = 0; i < count; i++) {
+    const c = document.createElement('div');
+    c.className = 'confetti';
+    c.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    c.style.left = Math.random() * 100 + 'vw';
+    c.style.fontSize = (Math.random() * 18 + 14) + 'px';
+    c.style.animationDuration = (Math.random() * 2 + 2) + 's';
+    c.style.animationDelay = Math.random() * 0.5 + 's';
+    document.body.appendChild(c);
+    setTimeout(() => c.remove(), 4500);
+  }
+}
+
+/* ---------- КНОПКА СНЕГОПАДА ---------- */
+document.getElementById('snowBtn').addEventListener('click', () => {
+  for (let i = 0; i < 60; i++) setTimeout(makeSnowflake, i * 40);
+  burstConfetti(25);
+});
+</script>
+</body>
+</html>
